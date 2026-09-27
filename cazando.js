@@ -12,6 +12,7 @@ let camidaX = 0;
 let comidaY = 0;
 let puntaje = 0;
 let tiempo = 10;
+let intervalo;
 
 function graficarRectangulo(x, y, ancho, alto, color){
     ctx.fillStyle = color;
@@ -25,7 +26,7 @@ function iniciarJuego(){
     comidaY = canvas.height - ALTO_COMIDA;
     graficarGato();
     graficarComida();
-    setInterval(restarTiempo, 1000);
+    intervalo = setInterval(restarTiempo, 1000);
 }
 
 function graficarGato(){
@@ -89,6 +90,10 @@ function detectarColision() {
         limpiarCanva();
         graficarGato();
         graficarComida();
+        if (puntaje === 6) {
+        clearInterval(intervalo);   // detener el conteo
+        alert("¡Ganaste! 🎉");
+    }
     }
    
     
@@ -102,6 +107,37 @@ function mostrarEnSpan(idSpan, valor){
 function restarTiempo() {
     tiempo = tiempo - 1;   // restar 1
     mostrarEnSpan("tiempo", tiempo);  // actualizar en pantalla
+     if (tiempo === 0) {
+        clearInterval(intervalo);   // detener el conteo
+        alert("Game Over 😿");
+    }
+}
+
+function reiniciarJuego() {
+    // Detener el intervalo anterior (si sigue corriendo)
+    clearInterval(intervalo);
+
+    // Reiniciar variables
+    puntaje = 0;
+    tiempo = 10;
+
+    // Reiniciar posiciones del gato al centro y comida a su esquina
+    gatoX = (canvas.width - ANCHO_GATO) / 2;
+    gatoY = (canvas.height - ALTO_GATO) / 2;
+    comidaX = canvas.width - ANCHO_COMIDA;
+    comidaY = canvas.height - ALTO_COMIDA;
+
+    // Actualizar la pantalla (puntaje y tiempo)
+    mostrarEnSpan("spanPuntaje", puntaje);
+    mostrarEnSpan("tiempo", tiempo);
+
+    // Volver a dibujar todo
+    limpiarCanva();
+    graficarGato();
+    graficarComida();
+
+    // Reiniciar el conteo regresivo
+    intervalo = setInterval(restarTiempo, 1000);
 }
 
 
