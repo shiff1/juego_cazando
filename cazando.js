@@ -42,6 +42,7 @@ function moverIzquierda(){
     limpiarCanva();
     graficarGato();
     graficarComida();
+    detectarColision();
 }
 
 function moverDerecha(){
@@ -49,6 +50,7 @@ function moverDerecha(){
     limpiarCanva();
     graficarGato();
     graficarComida();
+    detectarColision();
 }
 
 function moverArriba(){
@@ -56,12 +58,27 @@ function moverArriba(){
     limpiarCanva();
     graficarGato();
     graficarComida();
+    detectarColision();
 }
 
 function moverAbajo(){
     gatoY = gatoY + 10;
     limpiarCanva();
     graficarGato();
-    graficarComida();
+    graficarComida()
+    detectarColision();
+}
+
+function detectarColision() {
+    // Colison en el eje X
+    const chocaEnX = gatoX < comidaX + ANCHO_COMIDA &&
+                     gatoX + ANCHO_GATO > comidaX;
+    // Colision en el eje Y
+    const chocaEnY = gatoY < comidaY + ALTO_COMIDA &&
+                     gatoY + ALTO_GATO > comidaY;
+
+    if (chocaEnX && chocaEnY) {
+        alert("El gato tocó la comida ");
+    }
 }
 
